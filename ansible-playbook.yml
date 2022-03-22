@@ -1,0 +1,16 @@
+---
+- name: "automed website build test"
+  hosts: localhost:4000:80
+  tasks:
+    - name: stop current running container
+      command: docker stop mina
+      
+    - name: remove current container
+      command: docker rm mina
+      
+    - name: remove docker image
+      command: docker rmi testweb 
+    - name: build new image
+      command: docker build -t testweb .
+    - name : run new container 
+      command: docker run -d --name mina -p 4000:80 testweb 
